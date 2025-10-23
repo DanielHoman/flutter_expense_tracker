@@ -21,6 +21,7 @@ This project provided hands-on experience with critical Flutter/Dart techniques 
 * **Stateful Widgets & Management:** Managing the state of the expense list and the chart display using `StatefulWidget` and `setState()`.
 * **Data Modeling:** Creating custom Dart classes (e.g., `Expense`) to model transaction data.
 * **List & Data Handling:** Utilizing Dart `List` methods to add, filter, and remove data.
+* **Layout & Responsiveness:** Implementing a robust layout that adapts to both **portrait and landscape modes** (e.g., using `MediaQuery`).
 * **Date & Time Utilities:** Working with the `DateTime` class for expense dating and filtering.
 * **Custom Widgets:** Developing reusable widgets (like the chart bars or the expense item list) for a modular UI.
 
