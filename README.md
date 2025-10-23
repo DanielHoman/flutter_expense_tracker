@@ -1,4 +1,4 @@
-# 💰 Personal Expense Tracker (Flutter)
+# Personal Expense Tracker (Flutter)
 
 This application is a simple **personal expense tracker** built using **Flutter** and **Dart**. The project served as a foundational learning exercise, focusing on essential mobile development concepts and UI implementation. This application was developed as a practice project during a Flutter development course, focusing on integrating different UI components with dynamic data and user input.
 
