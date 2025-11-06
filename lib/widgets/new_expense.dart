@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 final DateFormat formatter = DateFormat('yyyy.MM.dd.');
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key, required this.addExpense});
+  const NewExpense({required this.addExpense, super.key});
 
   final void Function(Expense expense) addExpense;
 
@@ -24,10 +24,10 @@ class _NewExpenseState extends State<NewExpense> {
   DateTime? _selectedDate;
   ExpCategory _selectedCategory = ExpCategory.leisure;
 
-  void _presentDatePicker() async {
-    final DateTime now = DateTime.now();
-    final DateTime firstDate = DateTime(now.year - 1, now.month, now.day);
-    final DateTime? pickedDate = await showDatePicker(
+  Future<void> _presentDatePicker() async {
+    final now = DateTime.now();
+    final firstDate = DateTime(now.year - 1, now.month, now.day);
+    final pickedDate = await showDatePicker(
       context: context,
       initialDate: now,
       firstDate: firstDate,
@@ -38,7 +38,7 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
-  void _showDialog() {
+  Future<void> _showDialog() async {
     //! Platform.isIOS Weben nem működik mert a dart:io-hoz nincs hozzáférés
     final bool isIOS;
     if (kIsWeb) {
@@ -48,37 +48,37 @@ class _NewExpenseState extends State<NewExpense> {
     }
 
     if (isIOS) {
-      showCupertinoDialog(
+      await showCupertinoDialog<void>(
         context: context,
         builder: (ctx) => CupertinoAlertDialog(
-          title: const Text("Invalid input"),
+          title: const Text('Invalid input'),
           content: const Text(
-            "Please make sure a valid title, amount, date and category was entered.",
+            'Please make sure a valid title, amount, date and category was entered.',
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(ctx);
               },
-              child: const Text("Okay"),
+              child: const Text('Okay'),
             ),
           ],
         ),
       );
     } else {
-      showDialog(
+      await showDialog<void>(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text("Invalid input"),
+          title: const Text('Invalid input'),
           content: const Text(
-            "Please make sure a valid title, amount, date and category was entered.",
+            'Please make sure a valid title, amount, date and category was entered.',
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(ctx);
               },
-              child: const Text("Okay"),
+              child: const Text('Okay'),
             ),
           ],
         ),
@@ -87,8 +87,8 @@ class _NewExpenseState extends State<NewExpense> {
   }
 
   void _subbmitExpenseData() {
-    final double? enteredAmount = double.tryParse(_amountController.text);
-    final bool amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+    final enteredAmount = double.tryParse(_amountController.text);
+    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
     if (_titleController.text.trim().isEmpty ||
         amountIsInvalid ||
         _selectedDate == null) {
@@ -117,7 +117,7 @@ class _NewExpenseState extends State<NewExpense> {
     controller: _titleController,
     maxLength: 50,
     keyboardType: TextInputType.text,
-    decoration: const InputDecoration(label: Text("Title")),
+    decoration: const InputDecoration(label: Text('Title')),
   );
 
   Widget get amountWidget => Expanded(
@@ -125,8 +125,8 @@ class _NewExpenseState extends State<NewExpense> {
       controller: _amountController,
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
-        prefixText: "\$ ",
-        label: Text("Amount"),
+        prefixText: r'$ ',
+        label: Text('Amount'),
       ),
     ),
   );
@@ -151,18 +151,17 @@ class _NewExpenseState extends State<NewExpense> {
 
   Widget get dateWidget => Row(
     mainAxisAlignment: MainAxisAlignment.end,
-    crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       Text(
         _selectedDate == null
-            ? "No date selected"
+            ? 'No date selected'
             : formatter.format(
                 _selectedDate!,
               ), // "!" azt mondjuk, hogy nem lesz 'null'
       ),
       IconButton(
         onPressed: _presentDatePicker,
-        icon: Icon(Icons.calendar_month),
+        icon: const Icon(Icons.calendar_month),
       ),
     ],
   );
@@ -171,22 +170,20 @@ class _NewExpenseState extends State<NewExpense> {
     onPressed: () {
       Navigator.pop(context);
     },
-    child: const Text("Cancel"),
+    child: const Text('Cancel'),
   );
 
   Widget get saveWidget => ElevatedButton(
-    onPressed: () {
-      _subbmitExpenseData();
-    },
-    child: const Text("Save Expense"),
+    onPressed: _subbmitExpenseData,
+    child: const Text('Save Expense'),
   );
 
   @override
-  Widget build(context) {
-    final double keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
+  Widget build(BuildContext context) {
+    final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
     return LayoutBuilder(
       builder: (ctx, constraints) {
-        final double width = constraints.maxWidth;
+        final width = constraints.maxWidth;
         return SizedBox(
           height: double.infinity,
           child: SingleChildScrollView(

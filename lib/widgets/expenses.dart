@@ -1,8 +1,8 @@
+import 'package:expense_tracker/models/expense.dart';
 import 'package:expense_tracker/widgets/chart/chart.dart';
+import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_tracker/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
-import 'package:expense_tracker/models/expense.dart';
-import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
@@ -16,21 +16,21 @@ class Expenses extends StatefulWidget {
 class _ExpensesState extends State<Expenses> {
   final List<Expense> _registeredExpenses = [
     Expense(
-      title: "Flutter Course",
+      title: 'Flutter Course',
       amount: 19.99,
       date: DateTime.now(),
       category: ExpCategory.work,
     ),
     Expense(
-      title: "Cinema",
+      title: 'Cinema',
       amount: 15.69,
       date: DateTime.now(),
       category: ExpCategory.leisure,
     ),
   ];
 
-  void _openAddExpenseOverlay() {
-    showModalBottomSheet(
+  Future<void> _openAddExpenseOverlay() async {
+    await showModalBottomSheet<void>(
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
@@ -53,9 +53,9 @@ class _ExpensesState extends State<Expenses> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 3),
-        content: const Text("Expese deleted."),
+        content: const Text('Expese deleted.'),
         action: SnackBarAction(
-          label: "Undo",
+          label: 'Undo',
           onPressed: () {
             setState(() {
               _registeredExpenses.insert(expenseIndex, expense);
@@ -67,11 +67,11 @@ class _ExpensesState extends State<Expenses> {
   }
 
   @override
-  Widget build(context) {
-    final double width = MediaQuery.of(context).size.width;
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
 
     Widget mainContent = const Center(
-      child: Text("No expenses found. Start adding some!"),
+      child: Text('No expenses found. Start adding some!'),
     );
 
     if (_registeredExpenses.isNotEmpty) {
@@ -83,7 +83,7 @@ class _ExpensesState extends State<Expenses> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Flutter ExpenseTracker"),
+        title: const Text('Flutter ExpenseTracker'),
         actions: [
           IconButton(
             onPressed: _openAddExpenseOverlay,

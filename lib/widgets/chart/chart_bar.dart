@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ChartBar extends StatelessWidget {
-  const ChartBar({super.key, required this.fill});
+  const ChartBar({required this.fill, super.key});
 
   final double fill;
 
@@ -16,7 +16,6 @@ class ChartBar extends StatelessWidget {
           heightFactor: fill,
           child: DecoratedBox(
             decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(8),
               ),

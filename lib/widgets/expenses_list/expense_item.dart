@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:expense_tracker/models/expense.dart';
+import 'package:flutter/material.dart';
 
 class ExpenseItem extends StatelessWidget {
-  const ExpenseItem({super.key, required this.expense});
+  const ExpenseItem({required this.expense, super.key});
 
   final Expense expense;
 
@@ -20,7 +20,7 @@ class ExpenseItem extends StatelessWidget {
               children: [
                 // "toStringAsFixed" 12.3456 => 12.34
                 // "\$" megjelenítis a "$" jelet
-                Text("\$${expense.amount.toStringAsFixed(2)}"),
+                Text('\$${expense.amount.toStringAsFixed(2)}'),
                 const Spacer(),
                 Row(
                   children: [
